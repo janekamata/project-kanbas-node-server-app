@@ -5,7 +5,6 @@ export function findAssignmentsForCourse(courseId) {
 }
 
 export function createAssignment(assignment) {
-  console.log(assignment);
   const newAssignment = { ...assignment, _id: Date.now().toString() };
   Database.assignments = [...Database.assignments, newAssignment];
   return newAssignment;
