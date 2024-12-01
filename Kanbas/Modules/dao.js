@@ -1,4 +1,3 @@
-import Database from "../Database/index.js";
 import model from "./model.js";
 export function findModulesForCourse(courseId) {
   return model.find({ course: courseId });
