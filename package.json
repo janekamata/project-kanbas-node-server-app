@@ -29,10 +29,10 @@
   "homepage": "https://github.com/janekamata/kanbas-node-server-app#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.6",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
-    "mongodb": "^6.11.0",
+    "mongodb": "5.5",
     "mongoose": "^8.8.3"
   }
 }
