@@ -9,6 +9,7 @@ import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import session from "express-session";
 import AssignmentsRoutes from "./Kanbas/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kanbas/Enrollments/routes.js";
+import QuizRoutes from "./Kanbas/Quizzes/routes.js";
 import mongoose from "mongoose";
 
 const CONNECTION_STRING =
@@ -44,5 +45,5 @@ AssignmentsRoutes(app);
 EnrollmentsRoutes(app);
 Lab5(app);
 Hello(app);
-
+QuizRoutes(app);
 app.listen(process.env.PORT || 4000);
