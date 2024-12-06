@@ -165,4 +165,26 @@ export default function QuizRoutes(app) {
       res.status(500).send("Internal Server Error");
     }
   });
+
+  app.put("/api/courses/:cid/quizzes/:qid/publish", async (req, res) => {
+    const {qid} = req.params;
+    try {
+      await quizzesDao.publish(qid);
+      res.status(200);
+    } catch (error) {
+      console.error("Error publishing quiz:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  app.put("/api/courses/:cid/quizzes/:qid/unpublish", async (req, res) => {
+    const {qid} = req.params;
+    try {
+      await quizzesDao.unpublish(qid);
+      res.status(200);
+    } catch (error) {
+      console.error("Error publishing quiz:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
 }

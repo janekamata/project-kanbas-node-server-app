@@ -87,3 +87,13 @@ export async function incrementUserAttempt(quizId, userId) {
     return updatedQuiz;
   });
 }
+
+/** Sets the publish field in a quiz to true */
+export async function publish(quizId) {
+  QuizModel.updateOne({ _id: quizId }, {published: true});
+}
+
+/** Sets the publish field in a quiz to false */
+export async function unpublish(quizId) {
+  QuizModel.updateOne({ _id: quizId }, {published: false});
+}
