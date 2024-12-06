@@ -6,8 +6,8 @@ import QuizModel from "./model.js";
  * @returns {Promise<Array>} - List of quizzes belonging to the course.
  */
 export function findQuizzesForCourse(courseId) {
-  console.log('Finding quizzes for course', courseId);
-  return QuizModel.find({ course: courseId });
+  console.log("Finding quizzes for course", courseId);
+  return QuizModel.find({ course: courseId }).populate("course"); // Populates course details if needed
 }
 
 /**
@@ -35,7 +35,11 @@ export function deleteQuiz(quizId) {
  * @returns {Promise<Object>} - The result of the update operation.
  */
 export function updateQuiz(quizId, quizUpdates) {
-  return QuizModel.updateOne({ _id: quizId }, { $set: quizUpdates });
+  return QuizModel.findByIdAndUpdate(
+    quizId,
+    { $set: quizUpdates },
+    { new: true }
+  ); // Returns the updated quiz
 }
 
 /**
@@ -85,4 +89,43 @@ export async function incrementUserAttempt(quizId, userId) {
     }
     return updatedQuiz;
   });
+}
+
+/**
+ * Adds or updates a question in a quiz.
+ * @param {string} quizId - The ID of the quiz.
+ * @param {Object} question - The question to add or update.
+ * @param {string} [questionId] - The ID of the question (for updates).
+ * @returns {Promise<Object>} - The updated quiz.
+ */
+export async function addOrUpdateQuestion(quizId, question, questionId = null) {
+  if (questionId) {
+    // Update existing question
+    return QuizModel.findOneAndUpdate(
+      { _id: quizId, "questions._id": questionId },
+      { $set: { "questions.$": question } },
+      { new: true }
+    ).exec();
+  } else {
+    // Add new question
+    return QuizModel.findByIdAndUpdate(
+      quizId,
+      { $push: { questions: question } },
+      { new: true }
+    ).exec();
+  }
+}
+
+/**
+ * Deletes a question from a quiz.
+ * @param {string} quizId - The ID of the quiz.
+ * @param {string} questionId - The ID of the question to delete.
+ * @returns {Promise<Object>} - The updated quiz.
+ */
+export function deleteQuestion(quizId, questionId) {
+  return QuizModel.findByIdAndUpdate(
+    quizId,
+    { $pull: { questions: { _id: questionId } } },
+    { new: true }
+  ).exec();
 }
