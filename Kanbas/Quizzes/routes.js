@@ -60,7 +60,7 @@ export default function QuizRoutes(app) {
    * DELETE /api/quizzes/:qid
    * Deletes a quiz by its ID.
    */
-  app.delete("/api/quizzes/:qid", async (req, res) => {
+  app.delete("/api/courses/:cid/quizzes/:qid", async (req, res) => {
     const { qid } = req.params;
 
     // Validate quiz ID
@@ -81,7 +81,7 @@ export default function QuizRoutes(app) {
    * PUT /api/quizzes/:qid
    * Updates an existing quiz by its ID.
    */
-  app.put("/api/quizzes/:qid", async (req, res) => {
+  app.put("/api/courses/:cid/quizzes/:qid", async (req, res) => {
     const { qid } = req.params;
 
     // Validate quiz ID
@@ -109,7 +109,7 @@ export default function QuizRoutes(app) {
    * POST /api/quizzes/:qid/attempt
    * Records a new attempt for the authenticated user on a specific quiz.
    */
-  app.post("/api/quizzes/:qid/attempt", async (req, res) => {
+  app.post("/api/courses/:cid/quizzes/:qid/attempt", async (req, res) => {
     const { qid } = req.params;
     const userId = req.user && req.user.id; // Assumes user is authenticated and user info is in req.user
 
@@ -140,7 +140,7 @@ export default function QuizRoutes(app) {
    * GET /api/quizzes/:qid/attempts
    * Retrieves the number of attempts the authenticated user has made on a specific quiz.
    */
-  app.get("/api/quizzes/:qid/attempts", async (req, res) => {
+  app.get("/api/courses/:cid/quizzes/:qid/attempts", async (req, res) => {
     const { qid } = req.params;
     const userId = req.user && req.user.id; // Assumes user is authenticated and user info is in req.user
 
