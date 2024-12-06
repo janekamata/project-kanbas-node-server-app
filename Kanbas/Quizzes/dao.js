@@ -16,6 +16,7 @@ export function findQuizzesForCourse(courseId) {
  * @returns {Promise<Object>} - The newly created quiz.
  */
 export function createQuiz(quiz) {
+  delete quiz._id;
   return QuizModel.create(quiz);
 }
 
