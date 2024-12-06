@@ -111,8 +111,11 @@ export default function QuizRoutes(app) {
    */
   app.post("/api/courses/:cid/quizzes/:qid/attempt", async (req, res) => {
     const { qid } = req.params;
-    const userId = req.user && req.user.id; // Assumes user is authenticated and user info is in req.user
+    const currentUser = req.session["currentUser"];
 
+    const userId = currentUser && currentUser._id; // Assumes user is authenticated and user info is in req.user
+
+    console.log("are we here?");
     if (!userId) {
       return res.status(401).json({ error: "Unauthorized: User not authenticated" });
     }
@@ -123,11 +126,11 @@ export default function QuizRoutes(app) {
     }
 
     try {
-      const updatedQuiz = await quizzesDao.incrementUserAttempt(qid, userId);
+      const updatedQuiz = await quizzesDao.incrementUserAttempt(qid, currentUser._id);
       res.status(200).json({
         message: "Attempt recorded successfully",
         quizId: qid,
-        userId: userId,
+        userId: currentUser._id,
         updatedQuiz: updatedQuiz,
       });
     } catch (error) {
@@ -142,7 +145,9 @@ export default function QuizRoutes(app) {
    */
   app.get("/api/courses/:cid/quizzes/:qid/attempts", async (req, res) => {
     const { qid } = req.params;
-    const userId = req.user && req.user.id; // Assumes user is authenticated and user info is in req.user
+    const currentUser = req.session["currentUser"];
+
+    const userId = currentUser && currentUser._id; // Assumes user is authenticated and user info is in req.user
 
     if (!userId) {
       return res.status(401).json({ error: "Unauthorized: User not authenticated" });
@@ -154,10 +159,10 @@ export default function QuizRoutes(app) {
     }
 
     try {
-      const attemptCount = await quizzesDao.getUserAttemptCount(qid, userId);
+      const attemptCount = await quizzesDao.getUserAttemptCount(qid, currentUser._id);
       res.status(200).json({
         quizId: qid,
-        userId: userId,
+        userId: currentUser._id,
         attemptCount: attemptCount,
       });
     } catch (error) {
