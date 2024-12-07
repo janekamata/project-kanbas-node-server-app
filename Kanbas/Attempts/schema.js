@@ -24,7 +24,7 @@ const attemptSchemas = new mongoose.Schema(
     quiz: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz", required: true },
     questions: [
       {
-        question: { type: mongoose.Schema.Types.ObjectId, ref: "Question" },
+        question: { type: String },
         answer: { type: String },
         correct: { type: Boolean },
       },
