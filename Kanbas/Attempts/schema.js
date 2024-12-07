@@ -27,6 +27,7 @@ const attemptSchemas = new mongoose.Schema(
         question: { type: String },
         answer: { type: String },
         correct: { type: Boolean },
+        currentAnswer: { type: String },
       },
     ],
     score: { type: Number, default: 0 },
