@@ -6,8 +6,15 @@ import QuizModel from "./model.js";
  * @returns {Promise<Array>} - List of quizzes belonging to the course.
  */
 export function findQuizzesForCourse(courseId) {
-  console.log('Finding quizzes for course', courseId);
+  console.log("Finding quizzes for course", courseId);
   return QuizModel.find({ course: courseId });
+}
+
+/**
+ * Retrieves quiz by id.
+ */
+export function findQuizById(quizId) {
+  return QuizModel.findById(quizId);
 }
 
 /**
@@ -75,25 +82,27 @@ export async function incrementUserAttempt(quizId, userId) {
     { _id: quizId, "attempts.user": userId },
     { $inc: { "attempts.$.count": 1 } },
     { new: true }
-  ).exec().then(async (updatedQuiz) => {
-    if (!updatedQuiz) {
-      // If the user hasn't attempted yet, add a new record
-      return QuizModel.findByIdAndUpdate(
-        quizId,
-        { $push: { attempts: { user: userId, count: 1 } } },
-        { new: true }
-      ).exec();
-    }
-    return updatedQuiz;
-  });
+  )
+    .exec()
+    .then(async (updatedQuiz) => {
+      if (!updatedQuiz) {
+        // If the user hasn't attempted yet, add a new record
+        return QuizModel.findByIdAndUpdate(
+          quizId,
+          { $push: { attempts: { user: userId, count: 1 } } },
+          { new: true }
+        ).exec();
+      }
+      return updatedQuiz;
+    });
 }
 
 /** Sets the publish field in a quiz to true */
 export async function publish(quizId) {
-  QuizModel.updateOne({ _id: quizId }, {published: true});
+  QuizModel.updateOne({ _id: quizId }, { published: true });
 }
 
 /** Sets the publish field in a quiz to false */
 export async function unpublish(quizId) {
-  QuizModel.updateOne({ _id: quizId }, {published: false});
+  QuizModel.updateOne({ _id: quizId }, { published: false });
 }
