@@ -18,7 +18,7 @@ const questionSchema = new mongoose.Schema({
 });
 
 // Define a schema for attempts
-const attemptSchema = new mongoose.Schema(
+const attemptSchemas = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     quiz: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz", required: true },
@@ -35,4 +35,4 @@ const attemptSchema = new mongoose.Schema(
   { collection: "attempts" }
 );
 
-export const AttemptsModel = mongoose.model("AttemptsModel", attemptSchema);
+export default attemptSchemas;

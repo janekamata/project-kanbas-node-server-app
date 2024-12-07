@@ -10,6 +10,7 @@ import session from "express-session";
 import AssignmentsRoutes from "./Kanbas/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kanbas/Enrollments/routes.js";
 import QuizRoutes from "./Kanbas/Quizzes/routes.js";
+import AttemptsRoutes from "./Kanbas/Attempts/routes.js";
 import mongoose from "mongoose";
 
 const CONNECTION_STRING =
@@ -43,6 +44,7 @@ CourseRoutes(app);
 ModuleRoutes(app);
 AssignmentsRoutes(app);
 EnrollmentsRoutes(app);
+AttemptsRoutes(app);
 Lab5(app);
 Hello(app);
 QuizRoutes(app);
