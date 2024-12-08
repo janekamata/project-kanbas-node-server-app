@@ -32,7 +32,7 @@ export default function QuizRoutes(app) {
 
   /**
    * GET /api/courses/:cid/quizzes
-   * Retrieves all quizzes for a specific course.
+   * Retrieves specific quiz
    */
   app.get("/api/courses/:cid/quizzes/:qid", async (req, res) => {
     const { qid } = req.params;
@@ -237,7 +237,9 @@ export default function QuizRoutes(app) {
 
     // Check if the user is authenticated
     if (!userId) {
-      return res.status(401).json({ error: "Unauthorized: User not authenticated" });
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: User not authenticated" });
     }
 
     // Validate course ID
@@ -252,8 +254,10 @@ export default function QuizRoutes(app) {
 
     // Extract and validate the new score from the request body
     const { score } = req.body;
-    if (typeof score !== 'number' || score < 0) {
-      return res.status(400).json({ error: "Invalid score provided. Score must be a non-negative number." });
+    if (typeof score !== "number" || score < 0) {
+      return res.status(400).json({
+        error: "Invalid score provided. Score must be a non-negative number.",
+      });
     }
 
     try {
