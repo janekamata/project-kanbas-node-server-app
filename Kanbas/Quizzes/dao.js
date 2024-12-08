@@ -24,7 +24,16 @@ export function findQuizById(quizId) {
  */
 export function createQuiz(quiz) {
   delete quiz._id;
-  return QuizModel.create(quiz);
+  const newQuiz = {
+    ...quiz,
+    points:
+      quiz.questions &&
+      quiz.questions.reduce(
+        (sumQuestions, question) => sumQuestions + (question.points || 0),
+        0
+      ),
+  };
+  return QuizModel.create(newQuiz);
 }
 
 /**
